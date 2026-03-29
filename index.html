@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Calculus — Train Your Brain</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-brand" data-i18n="brand">Mental Calculus</div>
+    <div class="nav-links">
+      <a href="#" data-page="home" class="nav-link active" data-i18n="nav_home">Home</a>
+      <a href="#" data-page="practice" class="nav-link" data-i18n="nav_practice">Practice</a>
+      <a href="#" data-page="lessons" class="nav-link" data-i18n="nav_lessons">Techniques</a>
+      <a href="#" data-page="progress" class="nav-link" data-i18n="nav_progress">Progress</a>
+    </div>
+    <div class="lang-select">
+      <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+      <button class="lang-btn" data-lang="fr">🇫🇷 FR</button>
+      <button class="lang-btn" data-lang="de">🇩🇪 DE</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="page-home" class="page active">
+    <div class="hero">
+      <h1 data-i18n="hero_title">Sharpen Your Mental Math</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Master arithmetic in your head. No calculator, no paper — just your brain.</p>
+      <div class="hero-cards">
+        <div class="hero-card" data-goto="practice">
+          <div class="hero-card-icon">&#9201;</div>
+          <h3 data-i18n="card_practice_title">Timed Practice</h3>
+          <p data-i18n="card_practice_desc">Challenge yourself with exercises across 5 difficulty levels.</p>
+        </div>
+        <div class="hero-card" data-goto="lessons">
+          <div class="hero-card-icon">&#128218;</div>
+          <h3 data-i18n="card_lessons_title">Learn Techniques</h3>
+          <p data-i18n="card_lessons_desc">Proven methods: complement, anchor, cross-multiply and more.</p>
+        </div>
+        <div class="hero-card" data-goto="progress">
+          <div class="hero-card-icon">&#128200;</div>
+          <h3 data-i18n="card_progress_title">Track Progress</h3>
+          <p data-i18n="card_progress_desc">See your accuracy, speed, and streaks over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="page-practice" class="page">
+    <div id="practice-setup" class="panel">
+      <h2 data-i18n="setup_title">Practice Setup</h2>
+      <div class="setup-grid">
+        <div class="setup-group">
+          <label data-i18n="setup_operation">Operation</label>
+          <div class="btn-group" id="op-select">
+            <button class="btn-toggle active" data-op="addition" data-i18n="op_addition">Addition</button>
+            <button class="btn-toggle" data-op="subtraction" data-i18n="op_subtraction">Subtraction</button>
+            <button class="btn-toggle" data-op="multiplication" data-i18n="op_multiplication">Multiplication</button>
+            <button class="btn-toggle" data-op="division" data-i18n="op_division">Division</button>
+            <button class="btn-toggle" data-op="mixed" data-i18n="op_mixed">Mixed</button>
+          </div>
+        </div>
+        <div class="setup-group">
+          <label data-i18n="setup_difficulty">Difficulty</label>
+          <div class="btn-group" id="diff-select">
+            <button class="btn-toggle active" data-diff="1" data-i18n-diff="1">1 — Easy</button>
+            <button class="btn-toggle" data-diff="2">2</button>
+            <button class="btn-toggle" data-diff="3">3</button>
+            <button class="btn-toggle" data-diff="4">4</button>
+            <button class="btn-toggle" data-diff="5" data-i18n-diff="5">5 — Hard</button>
+          </div>
+        </div>
+        <div class="setup-group">
+          <label data-i18n="setup_round_length">Round length</label>
+          <div class="btn-group" id="count-select">
+            <button class="btn-toggle" data-count="5">5</button>
+            <button class="btn-toggle active" data-count="10">10</button>
+            <button class="btn-toggle" data-count="20">20</button>
+            <button class="btn-toggle" data-count="50">50</button>
+          </div>
+        </div>
+        <div class="setup-group">
+          <label data-i18n="setup_timer">Timer</label>
+          <div class="btn-group" id="timer-select">
+            <button class="btn-toggle" data-timer="0" data-i18n="timer_off">Off</button>
+            <button class="btn-toggle active" data-timer="10">10s</button>
+            <button class="btn-toggle" data-timer="20">20s</button>
+            <button class="btn-toggle" data-timer="30">30s</button>
+          </div>
+        </div>
+      </div>
+      <button id="btn-start" class="btn-primary" data-i18n="btn_start">Start Round</button>
+    </div>
+
+    <div id="practice-exercise" class="panel hidden">
+      <div class="exercise-header">
+        <span id="ex-counter">1 / 10</span>
+        <span id="ex-timer" class="timer-badge">10s</span>
+      </div>
+      <div class="timer-bar-wrap"><div id="timer-bar" class="timer-bar"></div></div>
+      <div id="ex-question" class="question">47 &times; 83</div>
+      <form id="answer-form">
+        <input type="text" inputmode="numeric" id="answer-input" autocomplete="off" data-i18n-placeholder="input_placeholder">
+        <button type="submit" class="btn-primary" data-i18n="btn_submit">Submit</button>
+      </form>
+      <div id="ex-feedback" class="feedback hidden"></div>
+      <button id="btn-next" class="btn-secondary hidden" data-i18n="btn_next">Next</button>
+    </div>
+
+    <div id="practice-results" class="panel hidden">
+      <h2 data-i18n="results_title">Round Complete</h2>
+      <div class="results-grid">
+        <div class="result-stat">
+          <span class="result-value" id="res-correct">0</span>
+          <span class="result-label" data-i18n="res_correct">Correct</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-value" id="res-total">0</span>
+          <span class="result-label" data-i18n="res_total">Total</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-value" id="res-accuracy">0%</span>
+          <span class="result-label" data-i18n="res_accuracy">Accuracy</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-value" id="res-avg-time">0s</span>
+          <span class="result-label" data-i18n="res_avg_time">Avg Time</span>
+        </div>
+      </div>
+      <div id="results-detail"></div>
+      <div class="results-actions">
+        <button id="btn-retry" class="btn-primary" data-i18n="btn_retry">Retry Same</button>
+        <button id="btn-new-round" class="btn-secondary" data-i18n="btn_new_round">New Setup</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LESSONS -->
+  <section id="page-lessons" class="page">
+    <h2 data-i18n="lessons_title">Mental Math Techniques</h2>
+    <div id="lessons-list" class="lessons-grid"></div>
+    <div id="lesson-detail" class="panel hidden"></div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="page-progress" class="page">
+    <h2 data-i18n="progress_title">Your Progress</h2>
+    <div class="progress-summary" id="progress-summary"></div>
+    <div class="progress-charts">
+      <canvas id="chart-accuracy" width="600" height="300"></canvas>
+      <canvas id="chart-speed" width="600" height="300"></canvas>
+    </div>
+    <button id="btn-clear-progress" class="btn-danger" data-i18n="btn_clear">Reset All Progress</button>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
