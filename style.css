@@ -24,7 +24,10 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh; /* dynamic viewport on mobile */
   line-height: 1.6;
+  overscroll-behavior-y: contain;
+  padding-bottom: env(safe-area-inset-bottom); /* iPhone home bar */
 }
 
 /* ── Nav ── */
@@ -361,16 +364,100 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* ── Responsive ── */
+/* ── Touch global fixes ── */
+button, a, .hero-card, .lesson-card, .btn-toggle, .lang-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button:active, .btn-toggle:active, .lang-btn:active { opacity: 0.75; }
+.hero-card:active, .lesson-card:active { transform: scale(0.98); }
+
+/* ── Mobile — small screens (≤ 640px) ── */
 @media (max-width: 640px) {
-  #navbar { padding: 0 1rem; }
-  .nav-links { gap: 0; flex: none; }
-  .nav-link { padding: 0.5rem 0.5rem; font-size: 0.8rem; }
-  .lang-btn { font-size: 0.75rem; padding: 0.25rem 0.4rem; }
-  .hero h1 { font-size: 1.75rem; }
-  .question { font-size: 1.75rem; }
-  .results-grid { grid-template-columns: repeat(2, 1fr); }
-  .panel { padding: 1.25rem; }
-  #answer-form { flex-direction: column; align-items: center; }
-  #answer-input { width: 100%; }
+
+  /* Navbar: brand + lang on row 1, links on row 2 */
+  #navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.6rem 1rem 0;
+    gap: 0;
+  }
+  .nav-brand { font-size: 1.1rem; flex: 1; }
+  .lang-select { gap: 0.2rem; }
+  .lang-btn { font-size: 0.72rem; padding: 0.28rem 0.45rem; }
+  .nav-links {
+    flex: 0 0 100%;
+    justify-content: space-around;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+    padding: 0.35rem 0;
+    gap: 0;
+  }
+  .nav-link {
+    flex: 1;
+    text-align: center;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.2rem;
+  }
+
+  /* Pages */
+  .page { padding: 1.25rem 1rem; }
+
+  /* Hero */
+  .hero { padding-top: 1.5rem; }
+  .hero h1 { font-size: 1.6rem; letter-spacing: -0.5px; }
+  .hero-sub { font-size: 0.95rem; margin-bottom: 1.75rem; }
+  .hero-cards { grid-template-columns: 1fr; gap: 0.85rem; }
+  .hero-card { padding: 1.25rem 1rem; display: flex; align-items: center; gap: 1rem; text-align: left; }
+  .hero-card-icon { font-size: 1.75rem; margin: 0; flex-shrink: 0; }
+
+  /* Panels */
+  .panel { padding: 1.1rem; }
+
+  /* Buttons — full width, large touch target */
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 0.95rem;
+    font-size: 1rem;
+  }
+  .btn-toggle {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.88rem;
+    min-height: 42px;
+  }
+  #btn-next { width: 100%; }
+
+  /* Exercise */
+  .question { font-size: 2rem; letter-spacing: 1px; margin: 1.25rem 0 1.5rem; }
+  #answer-form { flex-direction: column; align-items: stretch; gap: 0.65rem; }
+  #answer-input {
+    width: 100%;
+    font-size: 1.5rem; /* ≥16px prevents iOS zoom */
+    padding: 0.85rem 1rem;
+  }
+  .feedback { font-size: 1rem; }
+
+  /* Results */
+  .results-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .result-value { font-size: 1.6rem; }
+  .results-actions { flex-direction: column; gap: 0.65rem; }
+
+  /* Results table — horizontal scroll */
+  #results-detail { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #results-detail table { min-width: 380px; font-size: 0.82rem; }
+  #results-detail th, #results-detail td { padding: 0.4rem 0.5rem; }
+
+  /* Lessons */
+  .lessons-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .lesson-card { padding: 1.1rem; }
+  #lesson-detail .example { font-size: 0.88rem; padding: 0.85rem 1rem; }
+
+  /* Progress */
+  .progress-summary { grid-template-columns: repeat(3, 1fr); gap: 0.65rem; }
+  .progress-stat { padding: 0.85rem 0.5rem; }
+  .progress-stat .stat-value { font-size: 1.35rem; }
+  .progress-stat .stat-label { font-size: 0.7rem; }
+
+  /* Setup */
+  .setup-grid { gap: 1.1rem; }
 }
